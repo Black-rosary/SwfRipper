@@ -59,7 +59,7 @@ class SWF_ripper {
 			$this->_metadata['length']  =  $this->readI32();
 
 			if ($this->_metadata['signature'] == 'CWS') {
-				// сжато
+				// zipped
 				$this->_metadata['is_commpressed'] = true;
 				if (!$this->deflate()) {
 					throw new Exception("SWF ripper: Error of decompress");
@@ -73,7 +73,7 @@ class SWF_ripper {
 			$this->readTags();
 
 		} catch ( Exception $e )	{
-			//echo ('Swf ripper error :' . $e->getMessage()) . '<br/>';
+			/* TODO exception*/
 		}
 	}
 
@@ -340,7 +340,7 @@ class SWF_ripper {
 		return $img;
 	}
 
-	 /* BMP ������ */
+	 /* BMP */
 	function readDefineBitsLossless($tag, $withAlpha = false) {
 
 		$img = array();
@@ -419,7 +419,6 @@ class SWF_ripper {
 				$g = ($rgb >> 8) & 0xFF;
 				$b = $rgb & 0xFF;
 				if (isset($img['alphaData'])) {
-					/* TODO поправить.  */
 					$alpha = 127 - floor(ord($img['alphaData'][$y * $w + $x ]) / 2 );
 					if ($alpha < 0 ) $alpha = 0;
 				} else {
